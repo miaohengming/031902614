@@ -3,21 +3,34 @@ int main()
 	system("chcp 65001");//将控制台设置为utf-8编码
 	int i = 0, j = 0;
 	string dz;//地址：临时存放文件的路径
-	string mgc;//敏感词：临时存放读入的敏感词
-	
+	string str;//临时存放读入的词或句
+
 
 	//读入敏感词文件f1，并放入敏感词类的数组（Mgc[]）中
 	cin >> dz;
 	ifstream f1(dz);
 	if (!f1) cout << "open error!" << endl;
-	while (f1 >> mgc)
+	while (f1 >> str)//逐词读入
 	{
-		Mgc[i].w = mgc;
-		Mgc[i++].l = mgc.length();
+		Mgc[i].w = str;
+		Mgc[i].k = Mgc[i].w[0] > 0 ? 0 : 1;
+		Mgc[i++].l = str.length();
 	}
 	Mgc_sum = i;
+	for (i = 0; i < Mgc_sum; i++) cout << Mgc[i].w << "     " << Mgc[i].l << "     " << Mgc[i].k <<endl;//测试
 
 
-	//测试
-	for (i = 0; i < Mgc_sum; i++) cout << Mgc[i].w << "     " << Mgc[i].l << endl;
+	//读入文本文件f2，并放入文章的行类的数组（Hang[]）中
+	cin >> dz;
+	ifstream f2(dz);
+	if (!f2) cout << "open error!" << endl;
+	while (getline(f2,str))//逐行读入
+	{
+		Hang[j].s = str;
+		Hang[j++].l = str.length();
+	}
+	Hang_sum = j;
+	for (j = 0; j < Hang_sum; j++) cout << Hang[j].s << "     " << Hang[j].l << "     " << endl;//测试
+
+
 }

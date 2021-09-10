@@ -1,0 +1,23 @@
+int main()
+{
+	system("chcp 65001");//将控制台设置为utf-8编码
+	int i = 0, j = 0;
+	string dz;//地址：临时存放文件的路径
+	string mgc;//敏感词：临时存放读入的敏感词
+	
+
+	//读入敏感词文件f1，并放入敏感词类的数组（Mgc[]）中
+	cin >> dz;
+	ifstream f1(dz);
+	if (!f1) cout << "open error!" << endl;
+	while (f1 >> mgc)
+	{
+		Mgc[i].w = mgc;
+		Mgc[i++].l = mgc.length();
+	}
+	Mgc_sum = i;
+
+
+	//测试
+	for (i = 0; i < Mgc_sum; i++) cout << Mgc[i].w << "     " << Mgc[i].l << endl;
+}

@@ -1,0 +1,8 @@
+class ANS//答案类
+{
+public:
+	int mgc_num;//敏感词号（从0开始记,下同）
+	int hang_num;//行号
+	int h,e;//可疑文本的行内范围
+}Ans[3005];//答案上限3000条
+int Ans_num;//答案条数

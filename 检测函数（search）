@@ -1,0 +1,37 @@
+void search(MGC &M,HANG &H)//某行对某词进行搜索，不破坏行和词本身，匹配合适即存入答案类
+{
+	int i = 0, j = 0, head;
+	if (M.k == 1)//汉字
+	{
+		for (; j < H.l; j++) if (H.s[j] == M.w[i]&& H.s[j+1] == M.w[i+1]&& H.s[j+2] == M.w[i+2])
+		{
+			if (i == 0) head = j;
+			i += 3;
+			j += 2;
+			if (i == M.l)
+			{
+				Ans[Ans_num].mgc_num = M.num;
+				Ans[Ans_num].hang_num = H.num;
+				Ans[Ans_num].h = head;
+				Ans[Ans_num++].e = j;
+				i = 0;
+			}
+		}
+	}
+	else//英文
+	{
+		for (; j < H.l; j++) if ((H.s[j] == M.w[i]) || (H.s[j] - M.w[i] == 32 && M.w[i] <= 'Z') || (M.w[i] - H.s[j] == 32 && M.w[i] >= 'a'))
+		{
+			if (i == 0) head = j;
+			i++;
+			if (i == M.l)
+			{
+				Ans[Ans_num].mgc_num = M.num;
+				Ans[Ans_num].hang_num = H.num;
+				Ans[Ans_num].h = head;
+				Ans[Ans_num++].e = j;
+				i = 0;
+			}
+		}
+	}
+}

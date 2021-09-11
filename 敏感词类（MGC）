@@ -2,6 +2,7 @@ class MGC//敏感词类
 {
 public:
 	string w;//敏感词
+	int num;//敏感词号
 	int l;//utf-8码长度
 	int k;//1为汉字，0为英文
 }Mgc[105];//敏感词上限100个

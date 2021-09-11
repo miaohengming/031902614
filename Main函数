@@ -2,6 +2,7 @@ int main()
 {
 	system("chcp 65001");//将控制台设置为utf-8编码
 	int i = 0, j = 0;
+	Ans_num = 0;
 	string dz;//地址：临时存放文件的路径
 	string str;//临时存放读入的词或句
 
@@ -14,10 +15,12 @@ int main()
 	{
 		Mgc[i].w = str;
 		Mgc[i].k = Mgc[i].w[0] > 0 ? 0 : 1;
+		Mgc[i].num = i;
 		Mgc[i++].l = str.length();
 	}
 	Mgc_sum = i;
-	for (i = 0; i < Mgc_sum; i++) cout << Mgc[i].w << "     " << Mgc[i].l << "     " << Mgc[i].k <<endl;//测试
+	//for (i = 0; i < Mgc_sum; i++) cout << Mgc[i].w << "     " << Mgc[i].num << "     " << Mgc[i].k <<endl;//测试
+	f1.close();
 
 
 	//读入文本文件f2，并放入文章的行类的数组（Hang[]）中
@@ -27,10 +30,19 @@ int main()
 	while (getline(f2,str))//逐行读入
 	{
 		Hang[j].s = str;
+		Hang[j].num = j;
 		Hang[j++].l = str.length();
 	}
 	Hang_sum = j;
-	for (j = 0; j < Hang_sum; j++) cout << Hang[j].s << "     " << Hang[j].l << "     " << endl;//测试
+	//for (j = 0; j < Hang_sum; j++) cout << Hang[j].s << "     " << Hang[j].num << "     " << endl;//测试
+	f2.close();
 
 
+	//行-词遍历，得到结果放入答案类数组（Ans[]）中
+	for (j = 0; j < Hang_sum; j++) for (i = 0; i < Mgc_sum; i++) search(Mgc[i], Hang[j]);
+
+
+	//将结果输出到答案文件f3
+	ANS_print();
+	return 0;
 }

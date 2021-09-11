@@ -2,6 +2,7 @@ class HANG//文章的行类
 {
 public:
 	string s;//行内容
+	int num;//行号
 	int l;//utf-8码长度
 }Hang[1005];//文章上限1000行
 int Hang_sum;//行总数

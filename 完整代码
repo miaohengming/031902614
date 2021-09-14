@@ -40,39 +40,41 @@ public:
 int Ans_num;//答案条数
 
 
-void search(MGC &M,HANG &H)//某行对某词进行搜索，不破坏行和词本身，匹配合适即存入答案类
+void search(MGC &M,HANG &H)//输入对应的敏感词和行，不破坏行和词本身，检测到敏感字段即存入答案类
 {
 	int i = 0, j = 0, head;
-	if (M.k == 1)//汉字
+	if (M.k == 1)//敏感词为汉字
 	{
+		//连续3个字节相同，则进行匹配；若敏感词长度为n字节，则需匹配n/3次才算完成
 		for (; j < H.l; j++) if (H.s[j] == M.w[i]&& H.s[j+1] == M.w[i+1]&& H.s[j+2] == M.w[i+2])
 		{
-			if (i == 0) head = j;
+			if (i == 0) head = j;//第一次匹配时，对文章对应位置定位
 			i += 3;
 			j += 2;
-			if (i == M.l)
+			if (i == M.l)//匹配完成，记录信息，从当前位置继续查找该敏感词
 			{
+				i = 0;
 				Ans[Ans_num].mgc_num = M.num;
 				Ans[Ans_num].hang_num = H.num;
 				Ans[Ans_num].h = head;
 				Ans[Ans_num++].e = j;
-				i = 0;
 			}
 		}
 	}
-	else//英文
+	else//敏感词为英文
 	{
+		//不区分大小写，相同则匹配；若敏感单词长度为m字节，则匹配m次
 		for (; j < H.l; j++) if ((H.s[j] == M.w[i]) || (H.s[j] - M.w[i] == 32 && M.w[i] <= 'Z') || (M.w[i] - H.s[j] == 32 && M.w[i] >= 'a'))
 		{
 			if (i == 0) head = j;
 			i++;
-			if (i == M.l)
+			if (i == M.l)//匹配完成，记录信息，从当前位置继续查找该敏感词
 			{
+				i = 0;
 				Ans[Ans_num].mgc_num = M.num;
 				Ans[Ans_num].hang_num = H.num;
 				Ans[Ans_num].h = head;
 				Ans[Ans_num++].e = j;
-				i = 0;
 			}
 		}
 	}
